@@ -1,0 +1,47 @@
+---
+layout: post
+title: Going to PyCon 2008
+---
+
+There's only 4 days left before I fly to Chicago to attend the 
+[PyCon 2008][] conference, the biggest event for the [Python][] community.
+This will be the second time that I go to PyCon, [last year][] the
+conference was held in Addison Texas and I really had a great time, I met
+cool people, visited a few restaurants and learned interesting things
+about Python.
+
+Here are some photos that I took last year, and you can see more on my
+[flickr set][]:
+
+<a href="http://www.flickr.com/photos/13556513@N02/2319789671/" title="PyCon 07 - Addison, Texas by J Gajon, on Flickr"><img src="http://farm3.static.flickr.com/2418/2319789671_e7e79d4263_m.jpg" width="240" height="180" alt="PyCon 07 - Addison, Texas" /></a>  
+<a href="http://www.flickr.com/photos/13556513@N02/2319789675/" title="PyCon 07 - Addison, Texas by J Gajon, on Flickr"><img src="http://farm3.static.flickr.com/2402/2319789675_2af946a248_m.jpg" width="240" height="180" alt="PyCon 07 - Addison, Texas" /></a>  
+<a href="http://www.flickr.com/photos/13556513@N02/2319789673/" title="PyCon 07 - Addison, Texas by J Gajon, on Flickr"><img src="http://farm3.static.flickr.com/2015/2319789673_7082da3859_m.jpg" width="240" height="180" alt="PyCon 07 - Addison, Texas" /></a>  
+<a href="http://www.flickr.com/photos/13556513@N02/2320633978/" title="PyCon 07 - Addison, Texas by J Gajon, on Flickr"><img src="http://farm4.static.flickr.com/3042/2320633978_d50da2e9a6_m.jpg" width="240" height="180" alt="PyCon 07 - Addison, Texas" /></a>
+
+<span class="clear"></span>
+
+I'm sure this year's PyCon will be great!
+
+
+*Update*: PyCon 08 is over, [here are][] some of the photos that I took.
+
+<a href="http://www.flickr.com/photos/jorge_g/2355693743/" title="PyCon 08 - Chicago, Illinois by J Gajon, on Flickr"><img src="http://farm3.static.flickr.com/2171/2355693743_b1939ce197_m.jpg" width="240" height="180" alt="PyCon 08 - Chicago, Illinois" /></a>
+<a href="http://www.flickr.com/photos/jorge_g/2355921819/" title="PyCon 08 - Chicago, Illinois by J Gajon, on Flickr"><img src="http://farm3.static.flickr.com/2199/2355921819_e2f31b795f_m.jpg" width="240" height="180" alt="PyCon 08 - Chicago, Illinois" /></a>
+<a href="http://www.flickr.com/photos/jorge_g/2356307568/" title="PyCon 08 - Chicago, Illinois by J Gajon, on Flickr"><img src="http://farm3.static.flickr.com/2345/2356307568_7b1b59d6d7_m.jpg" width="240" height="160" alt="PyCon 08 - Chicago, Illinois" /></a>
+<a href="http://www.flickr.com/photos/jorge_g/2355921883/" title="PyCon 08 - Chicago, Illinois by J Gajon, on Flickr"><img src="http://farm4.static.flickr.com/3123/2355921883_b82a90186f_m.jpg" width="240" height="180" alt="PyCon 08 - Chicago, Illinois" /></a>
+
+<span class="clear"></span>
+
+It's nice to meet intelligent people and be surrounded by all this
+enthusiasm around this cool language and all the projects that are being
+built with it.
+
+
+[PyCon 2008]: http://us.pycon.org/2008/about/
+[Python]: http://python.org
+[last year]: http://us.pycon.org/TX2007/HomePage
+[flickr set]: http://flickr.com/photos/jorge_g/sets/72157604074072678/
+[here are]: http://flickr.com/photos/jorge_g/sets/72157604225881775/
+
+
+<!-- vim: set tw=74 sw=4 ts=4 et spell filetype=mkd: -->
