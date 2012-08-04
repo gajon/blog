@@ -1,0 +1,26 @@
+---
+layout: default
+title: Never walk alone
+---
+
+<div id="header">
+  <h1>Never walk alone...</h1>
+</div>
+
+<div id="content">
+  {% for post in site.posts %}
+    <div class="postheader">
+      <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+      <p>{{ post.date | date:'%B %d, %Y' }}</p>
+    </div>
+
+    <div class="postsummary">
+      {% if post.summary %}
+        {{ post.summary | markdownify }}
+        <p class="readmore-link"><a href="{{ post.url }}">Read more...</a></p>
+      {% else %}
+        {{ post.content }}
+      {% endif %}
+    </div>
+  {% endfor %}
+</div>
