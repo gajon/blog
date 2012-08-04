@@ -1,0 +1,29 @@
+body {
+	background: white;
+	font: normal 12pt Georgia,serif;
+}
+
+#container,#content {
+	width: auto;
+	border: 0;
+	margin: 0 0%;
+	padding: 0;
+	float: none !important;
+}
+
+#sidebar {
+	display: none;
+}
+
+#footer {
+	font-size: 10pt;
+}
+
+h1 { font-size: 14pt; }
+h2,h3,h4,h5,h6 { font-size: 12pt; }
+
+
+/*a:link:after, a:visited:after {
+	content: " (" attr(href) ") ";
+	font-size: 90%;
+}*/
