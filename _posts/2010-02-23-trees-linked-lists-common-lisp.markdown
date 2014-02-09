@@ -142,7 +142,7 @@ refers to the data stored in this node, which can be any kind of object.
 Using this node representation, the example tree given in *Figure 1* would
 be displayed by Common Lisp as the following list. Can you see why?
 
-    ((1 (2 (6) (7)) (3) (4 (9 (12))) (5 (10) (11))))
+    ((1 (2 (6) (7) (8)) (3) (4 (9 (12))) (5 (10) (11))))
 
 
 ### Exercise
