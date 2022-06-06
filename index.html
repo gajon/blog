@@ -1,26 +1,20 @@
 ---
 layout: default
-title: Never walk alone
+title: Jorge Gajon | Backend Developer
 ---
 
-<div id="header">
-  <h1>Never walk alone...</h1>
-</div>
+{% for post in site.posts %}
+  <hgroup>
+    <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+    <small>{{ post.date | date:'%B %d, %Y' }}</small>
+  </hgroup>
 
-<div id="content">
-  {% for post in site.posts %}
-    <div class="postheader">
-      <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
-      <p>{{ post.date | date:'%B %d, %Y' }}</p>
-    </div>
+  {% if post.summary %}
+    {{ post.summary | markdownify }}
+    <p><a href="{{ post.url }}">Read more...</a></p>
+  {% else %}
+    {{ post.content }}
+  {% endif %}
+{% endfor %}
 
-    <div class="postsummary">
-      {% if post.summary %}
-        {{ post.summary | markdownify }}
-        <p class="readmore-link"><a href="{{ post.url }}">Read more...</a></p>
-      {% else %}
-        {{ post.content }}
-      {% endif %}
-    </div>
-  {% endfor %}
-</div>
+<!-- vim: set sts=2 sw=2 et: -->
