@@ -1,20 +1,49 @@
 ---
-layout: default
+layout: home
 title: Jorge Gajon | Backend Developer
 ---
 
-{% for post in site.posts %}
-  <hgroup>
-    <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
-    <small>{{ post.date | date:'%B %d, %Y' }}</small>
-  </hgroup>
+<h1>Hey there 👋</h1>
 
-  {% if post.summary %}
-    {{ post.summary | markdownify }}
-    <p><a href="{{ post.url }}">Read more...</a></p>
-  {% else %}
-    {{ post.content }}
-  {% endif %}
-{% endfor %}
+<div class="home-intro">
+  <div class="intro">
+    <p>My name is Jorge Gajon, I've been working as a software developer for
+    nearly 20 years. But for the last 11 years I've been working primarily with
+    Ruby and Ruby on Rails, with an emphasis in TDD and clean code. You can
+    read more about my experience in my <a href="/about">About</a> page.</p>
+
+    <p>Or you can check the latest articles listed below.</p>
+  </div>
+  <div class="photo">
+    <img src="/media/images/about-photo-jorge-gajon.jpg">
+  </div>
+</div>
+
+<style>
+.home-intro {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: start;
+  column-gap: 20px;
+  margin-bottom: 2rem;
+}
+.home-intro .photo img {
+  border-radius: 1rem;
+  width: 10rem;
+}
+@media (min-width: 576px) {
+  .home-intro .intro { flex: 4; }
+  .home-intro .photo { flex: 2; }
+  .home-intro .photo img { width: 100%; }
+}
+@media (min-width: 768px) { }
+@media (min-width: 992px) {
+  .home-intro .intro { flex: 4; }
+  .home-intro .photo { flex: 1; }
+}
+@media (min-width: 1200px) { }
+</style>
+
+{% include latest-articles.html %}
 
 <!-- vim: set sts=2 sw=2 et: -->
