@@ -6,6 +6,12 @@
     <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
     <title>{{ page.title }}</title>
     <style>
+      /* Posts */
+      .post-layout > hgroup {
+        text-align: center;
+      }
+
+      /* Footer components */
       .about-container {
         display: flex;
         flex-flow: row wrap;
@@ -20,15 +26,22 @@
         flex: 5;
       }
 
-      .footer-copyright {
-        display: flex;
-        flex-flow: row wrap;
-        align-items: center;
-        justify-content: space-between;
-      }
       .footer-copyright a.secondary {
-        margin-left: 1rem;
+        margin-left: 0.5rem;
         text-decoration: none;
+      }
+
+      @media (min-width: 576px) {
+        .footer-copyright {
+          display: flex;
+          flex-flow: row wrap;
+          align-items: center;
+          justify-content: space-between;
+        }
+        .footer-copyright a.secondary {
+          margin: 0 0.5rem;
+          text-decoration: none;
+        }
       }
 
       .social-icon {
