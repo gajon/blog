@@ -1,0 +1,1146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Introduction to Common Lisp</title>
+<!-- metadata -->
+<meta name="generator" content="S5" />
+<meta name="version" content="S5 1.1" />
+<meta name="presdate" content="20050728" />
+<meta name="author" content="Eric A. Meyer" />
+<meta name="company" content="Complex Spiral Consulting" />
+<!-- configuration parameters -->
+<meta name="defaultView" content="slideshow" />
+<meta name="controlVis" content="hidden" />
+<!-- style sheet links -->
+<link rel="stylesheet" href="ui/default/slides.css" type="text/css" media="projection" id="slideProj" />
+<link rel="stylesheet" href="ui/default/outline.css" type="text/css" media="screen" id="outlineStyle" />
+<link rel="stylesheet" href="ui/default/print.css" type="text/css" media="print" id="slidePrint" />
+<link rel="stylesheet" href="ui/default/opera.css" type="text/css" media="projection" id="operaFix" />
+<!-- S5 JS -->
+<script src="ui/default/slides.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="layout">
+<div id="controls"><!-- DO NOT EDIT --></div>
+<div id="currentSlide"><!-- DO NOT EDIT --></div>
+<div id="header"></div>
+<div id="footer">
+<h1>Mexico City/September 29, 2010</h1>
+<h2>Introduction to Common Lisp</h2>
+</div>
+
+</div>
+
+
+<div class="presentation">
+
+<div class="slide">
+    <h1>Introduction to Common Lisp</h1>
+    <h2>For the fine hackers of the <a href="http://hackerroom.mx">http://HackerRoom.MX</a></h2>
+    <h3>Jorge Gajon</h3>
+    <h4><a href="http://gajon.org">http://gajon.org</a></h4>
+</div>
+
+
+<div class="slide">
+    <h1>Little bit of History</h1>
+
+    <p>It was created by John McCarthy in 1958, as a mathematical notation
+    for computer programs.</p>
+    <p>Was not intended to be an actual programming language... until someone
+    (Steve Russell) wrote an interpreter for it.</p>
+</div>
+
+
+<div class="slide">
+    <h1>There are many LISPs</h1>
+    <p>Lisp is a family of computer programming languages:</p>
+
+    <ul>
+        <li>Common Lisp</li>
+        <li>Dylan</li>
+        <li>Scheme</li>
+        <li>Clojure</li>
+        <li>Arc</li>
+        <li>AutoLisp</li>
+        <li>....</li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>There are many LISPs</h1>
+    <p>We will concentrate in one of them:</p>
+    <p><strong>Common Lisp</strong></p>
+</div>
+
+
+<div class="slide">
+    <h1>Lisp is Different</h1>
+    <p>
+    <img src="different.jpg" />
+    <br />
+    <a href="http://www.lisperati.com/casting.html">http://www.lisperati.com/casting.html</a></p>
+</div>
+
+<div class="slide">
+    <h1>Lisp is Different</h1>
+    <p>
+    <img src="lisplogo_fancy_256.png" /></p>
+</div>
+
+
+<!--Essential Syntax-->
+<div class="slide">
+    <h1>Syntax</h1>
+    <p>A Lisp expression (also called <em>form</em>) can be:
+
+    <ul>
+        <li>An atom:  <code>2, 3, hello, "world"</code></li>
+        <li>A list of atoms and other lists: <code>(1 2 4 (5 6) 7)</code></li>
+        <li>An empty list: <code>()</code> which is also represented by the
+        atom <code>nil</code></li>
+    </ul>
+    </p>
+</div>
+
+
+<div class="slide">
+    <h1>Atoms</h1>
+
+    <p>Atoms are only separated by whitespace and lists</p>
+<pre>
+23
+hello!!
+@I'm-a-whole-atom
+/Me_too/
+</pre>
+</div>
+
+<div class="slide">
+    <h1>Lists</h1>
+
+    <p>Lists can be nested.</p>
+
+<pre>
+(a b (c d) e (f (g h)))
+((()))
+((10 a) "no")
+</pre>
+
+    <p>Your editor should help you with balancing the parentheses, if it
+    doesn't then get another editor.</p>
+</div>
+
+
+<!--Essential Evaluation-->
+<div class="slide">
+    <h1>Evaluation</h1>
+    <p>Atoms can represent many things, most commonly <em>numbers,
+        strings,</em> and <em>symbols</em>.</p>
+    <p>Numbers and strings evaluate to themselves:</p>
+<pre>
+1
+=&gt; 1
+
+"hello"
+=&gt; "hello"
+</pre>
+</div>
+
+<div class="slide">
+    <h1>Evaluation</h1>
+    <p>A symbol is an atom that can have a value,</p>
+<pre>
+hello
+=&gt; ERROR: The variable HELLO is unboud.
+
+(defparameter hello "Hello World!")
+
+hello
+=&gt; "Hello World!"
+</pre>
+</div>
+
+
+
+<div class="slide">
+    <h1>Evaluation</h1>
+    <p>A function application <em>f(x)</em> is written as <code>(f x)</code></p>
+    <p>This is prefix notation.</p>
+    <pre>(function arg1 arg2 arg3 ....)</pre>
+    <p>For example:</p>
+<pre>(+ 1 2 3)
+=&gt; 6
+
+(print "Foo")
+=&gt; "Foo" 
+</pre>
+</div>
+
+
+
+<div class="slide">
+    <h1>Evaluation</h1>
+    <p>Lisp evaluates the arguments (left to right), then applies the
+    function (the first element of the list) to these arguments.</p>
+</div>
+
+
+
+<div class="slide">
+    <h1>Evaluation</h1>
+    <p>Defining functions</p>
+<pre>
+(defun factorial (x)
+  (if (eql x 0)
+    1 
+    (* x (factorial (- x 1)))))
+
+
+(factorial 5)
+=&gt; 120
+
+(factorial (+ 2 3))
+=&gt; 120
+</pre>
+</div>
+
+    <!--multiple values?-->
+
+
+
+
+
+<!--Special Forms and Macros-->
+<div class="slide">
+    <h1>Special Forms</h1>
+    <p>There are <em>"Special Forms"</em> and <em>"Macros"</em>, that look
+    like regular functions but don't obey the argument evaluation rules
+    defined for functions.</p> </div>
+
+<div class="slide">
+    <h1>Special Forms</h1>
+    <p>The special form <code>QUOTE</code> prevents evaluation of its
+    argument.</p>
+<pre>
+(print hello)
+=&gt; "Hello World!" 
+
+(print (quote hello))
+=&gt; HELLO 
+</pre>
+</div>
+
+<div class="slide">
+    <h1>Special Forms</h1>
+    <p>There's a shortcut for <code>QUOTE</code> which is the apostrophe
+    <code>'</code></p>
+<pre>
+(print 'hello)
+=&gt; HELLO 
+
+(print 'hey-im-a-random-symbol)
+=&gt; HEY-IM-A-RANDOM-SYMBOL 
+</pre>
+</div>
+
+<div class="slide">
+    <h1>Special Forms</h1>
+    <p>Another special form is <code>IF</code></p>
+<pre>
+(if (equal 20 (+ 15 5)) 
+  (print "I know how to sum!")
+  (print "I failed basic math..."))
+
+=&gt; "I know how to sum!" 
+</pre>
+</div>
+
+<div class="slide">
+    <h1>Special Forms</h1>
+    <p>There are three arguments to the previous <code>IF</code> example:</p>
+    <ul>
+        <li>(equal 20 (+ 15 5))</li>
+        <li>(print "I know how to sum!")</li>
+        <li>(print "I failed basic math...")</li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>Special Forms</h1>
+    <p>The first argument is evaluated:</p>
+<pre>
+(equal 20 (+ 15 5))
+=&gt; T
+</pre>
+    <p>And if the result is a true value (which the symbol <code>T</code>
+    is), the second argument to <code>IF</code> is evaluated, otherwise it
+    is the third argument that is evaluated.</p>
+</div>
+
+<div class="slide">
+    <h1>Special Forms</h1>
+    <p>There is no difference between expressions and statements</p>
+    <p>All forms return a value!</p>
+    <p>Always...</p>
+<pre>
+(print (if (&gt; 5 3) "Five" "What??"))
+=&gt; "Five"
+</pre>
+</div>
+
+<div class="slide">
+    <h1>Special Forms</h1>
+    <p><code>LET</code> defines values for symbols, but these symbols are
+    only valid within the scope of <code>LET</code>.</p>
+<pre>
+(let ((a 3)
+      (b 4)
+      (c 5))
+  (* (+ a b) c))
+=&gt; 35
+</pre>
+    <p><code>LET</code> looks like: <code>(let (bindings) forms)</code>.</p>
+</div>
+
+<div class="slide">
+    <h1>Special Forms</h1>
+    <p><code>COND</code> lets us evaluate forms conditionally:</p>
+<pre>
+(defun is-my-favorite-number? (num)
+  (cond ((equal num 10) "Yes it is")
+        ((evenp num) "I like even numbers")
+        (t "Nope, try with another one")))
+
+(is-my-favorite-number? 10)
+=&gt; "Yes it is"
+
+(is-my-favorite-number? 2)
+=&gt; "I like even numbers"
+
+(is-my-favorite-number? 3)
+=&gt; "Nope, try with another one"
+</pre>
+</div>
+
+
+<div class="slide">
+    <h1>Special Forms</h1>
+    <p>We can change values of bindings with <code>SETF</code>:</p>
+<pre>
+hello
+=&gt; "Hello World!"
+
+(setf hello "Hola Mundo!")
+=&gt; "Hola Mundo!"
+
+hello
+=&gt; "Hola Mundo!"
+</pre>
+</div>
+
+
+<div class="slide">
+    <h1>Special Forms</h1>
+    <p>We can change values of bindings with <code>SETF</code>:</p>
+<pre>
+(let ((name "Jorge"))
+  (format t "My name is ~a~%" name)
+  (setf name "George")
+  (format t "Or ~a if you'd like." name))
+
+My name is Jorge
+Or George if you'd like.
+=&gt; NIL
+</pre>
+</div>
+
+
+<!-- Creating lists -->
+<div class="slide">
+    <h1>Creating Lists</h1>
+    <p><code>CONS</code> is the basic constructor of lists:</p>
+<pre>
+(cons 1 nil)
+=&gt; (1)
+
+(cons 1 (cons 2 (cons 3 nil)))
+=&gt; (1 2 3)
+
+(cons 'hey (cons "you" nil))
+=&gt; (HEY "you")
+</pre>
+</div>
+
+<div class="slide">
+    <h1>Creating Lists</h1>
+    <p>It's easier to create lists with <code>LIST</code>:</p>
+<pre>
+(list 1 2 3)
+=&gt; (1 2 3)
+
+(list 'hey "you" 10)
+=&gt; (HEY "you" 10)
+
+(list 'a (list 'b 'c) 2 3)
+=&gt; (A (B C) 2 3)
+</pre>
+</div>
+
+<div class="slide">
+    <h1>CONS Cells</h1>
+    <p>Lisp uses a primitive object to create lists, the <em>Cons
+        Cell</em>.</p>
+    <p>A <em>Cons Cell</em> is an object with two slots, which for
+    historical reasons, are called the <code>CAR</code> and <code>CDR</code></p>
+</div>
+
+<div class="slide">
+    <h1>CONS Cells</h1>
+    <p>Remember that:</p>
+<pre>
+(cons 1 (cons 2 (cons 3 nil)))
+=&gt; (1 2 3)
+</pre>
+    <p>A picture of the <em>cons cells</em> is:</p>
+    <p><img src="list-1-2-3.png"/></p>
+    <p><small>From: <a href="http://www.gigamonkeys.com/book/">http://www.gigamonkeys.com/book/</a></small></p>
+</div>
+
+<div class="slide">
+    <h1>CONS Cells</h1>
+<pre>
+(list "foo" (list 1 2) 10)
+=&gt; ("foo" (1 2) 10)
+</pre>
+    <p><img src="mixed-list.png"/></p>
+    <p><small>From: <a href="http://www.gigamonkeys.com/book/">http://www.gigamonkeys.com/book/</a></small></p>
+</div>
+
+<div class="slide">
+    <h1>Lists</h1>
+    <p>You can use lists to represent trees of any depth and complexity:</p>
+    <p><img src="tree1.png" /></p>
+</div>
+
+<div class="slide">
+    <h1>Lists</h1>
+    <p><img src="tree2.png" /></p>
+</div>
+
+<div class="slide">
+    <h1>Lists</h1>
+    <p><img src="tree2.png" /></p>
+    <p><code>(1 2 3 4 5)</code></p>
+</div>
+<div class="slide">
+    <h1>Lists</h1>
+    <p><img src="tree2.png" /></p>
+    <p><code>(1 (2 6 7 8) 3 4 5)</code></p>
+</div>
+<div class="slide">
+    <h1>Lists</h1>
+    <p><img src="tree2.png" /></p>
+    <p><code>(1 (2 6 7 8) 3 (4 9) 5)</code></p>
+</div>
+<div class="slide">
+    <h1>Lists</h1>
+    <p><img src="tree2.png" /></p>
+    <p><code>(1 (2 6 7 8) 3 (4 (9 12)) 5)</code></p>
+</div>
+<div class="slide">
+    <h1>Lists</h1>
+    <p><img src="tree2.png" /></p>
+    <p><code>(1 (2 6 7 8) 3 (4 (9 12)) (5 10 11))</code></p>
+</div>
+<div class="slide">
+    <h1>Lists</h1>
+    <p><img src="tree3.png" /></p>
+    <p><code>(1 (2 6 7 8) 3 (4 (9 12)) (5 10 11))</code></p>
+</div>
+
+
+<div class="slide">
+    <h1>CAR and CDR</h1>
+    <p>You can use the functions <code>CAR</code> and <code>CDR</code>
+    to access the contents of the two slots of a cons cell.</p>
+<pre>
+(let ((mylist (list 1 2 3)))
+  (format t "First element: ~a~%" (car mylist))
+  (format t "The rest: ~a~%" (cdr mylist)))
+
+First element: 1
+The rest: (2 3)
+=&gt; NIL
+</pre>
+    <p><img src="list-1-2-3.png" /></p>
+</div>
+
+<div class="slide">
+    <h1>CAR and CDR</h1>
+    <p>There are nicknames for <code>CAR</code> and <code>CDR</code>, called
+    <code>FIRST</code> and <code>REST</code></p>
+<pre>
+(let ((mylist (list 1 2 3)))
+  (format t "First element: ~a~%" (first mylist))
+  (format t "The rest: ~a~%" (rest mylist)))
+
+First element: 1
+The rest: (2 3)
+=&gt; NIL
+</pre>
+    <p><img src="list-1-2-3.png" /></p>
+</div>
+
+<div class="slide">
+    <h1>CAR and CDR</h1>
+    <p>But lispers usually stick to <code>CAR</code> and <code>CDR</code></p>
+    <p>The advantage is that they can be combined:</p>
+<pre>
+(format nil "Second element is ~a~%" (cadr (list 1 2 3)))
+=&gt; "Second element is 2"
+</pre>
+</div>
+
+<div class="slide">
+    <h1>CAR and CDR</h1>
+<pre>
+(let ((foo '((three 4) (five (6)) "seven" 8)))
+  (list (cadar foo)
+        (cadr foo)
+        (caddr foo)
+        (cadddr foo)))
+
+
+=&gt; (4 (FIVE (6)) "seven" 8)
+</pre>
+</div>
+
+
+<!--Naming and Identity-->
+
+<!--Binding vs. Assignment-->
+
+
+<!--Multiple Values-->
+<div class="slide">
+    <h1>Multiple Values</h1>
+    <p>A function can return more than one value, for example the function
+    <code>FLOOR</code> divide a number by a divisor and returns two values,
+    the quotient and remainder.</p>
+<pre>
+(floor 20 2)
+=&gt; 10
+=&gt; 0
+
+(floor 20 3)
+=&gt; 6
+=&gt; 2
+</pre>
+</div>
+
+<div class="slide">
+    <h1>Multiple Values</h1>
+    <p>Normally we only access the first value:</p>
+
+<pre>
+(equal 6 (floor 20 3))
+=&gt; T
+
+(multiple-value-bind (quotient remainder) (floor 20 3)
+  (format t "The quot is ~a and the rem is ~a~%" quotient remainder)
+  (+ (* quotient 3) remainder))
+
+The quot is 6 and the rem is 2
+=&gt; 20
+</pre>
+</div>
+
+
+<div class="slide">
+    <h1>Multiple Values</h1>
+    <p>We can return multiple values from our functions with the
+    <code>VALUES</code> function:</p>
+<pre>
+(defun foo (x)
+  (values
+    (* 2 x)
+    (* 3 x)))
+
+(multiple-value-bind (twotimes threetimes) (foo 4)
+  (list twotimes threetimes))
+=&gt; (8 12)
+</pre>
+</div>
+
+
+
+<!--Other Data Types-->
+<div class="slide">
+    <h1>Data Types: Numbers</h1>
+    <p>Common Lisp has a rich number type system: <em>Reals, Integers,
+        Rationals, Fixnums, Bignums, and Complex</em>.</p>
+<pre>
+10.23
+=&gt; 10.23
+
+(/ 1 3)
+=&gt; 1/3
+
+(+ 2/3 1/3)
+=&gt; 1
+
+(+ 2/3 5/3)
+=&gt; 7/3
+</pre>
+</div>
+
+<div class="slide">
+    <h1>Data Types: Numbers</h1>
+    <p>Common Lisp has a rich number type system: <em>Reals, Integers,
+        Rationals, Fixnums, Bignums, and Complex</em>.</p>
+<pre>
+#c(10 2)
+=&gt; #C(10 2)
+
+(expt 2 1000)
+=&gt; 10715086071862673209484250490600018105614048117055336074437503883703510511249361224931983788156958581275946729175531468251871452856923140435984577574698574803934567774824230985421074605062371141877954182153046474983581941267398767559165543946077062914571196477686542167660429831652624386837205668069376 </pre>
+</div>
+
+<div class="slide">
+    <h1>Arrays</h1>
+<pre>
+(defparameter arr (make-array '(2 3) :initial-element nil))
+=&gt; #2A((NIL NIL NIL) (NIL NIL NIL))
+
+(aref arr 0 0)
+=&gt; NIL
+
+(setf (aref arr 0 0) 'b)
+=&gt; B
+
+arr
+=&gt; #2A((B NIL NIL) (NIL NIL NIL))
+</pre>
+</div>
+
+<div class="slide">
+    <h1>Arrays</h1>
+<pre>
+(setf (aref arr 1 0) 'c
+      (aref arr 1 1) 'd)
+
+arr
+=&gt; #2A((B NIL NIL) (C D NIL))
+</pre>
+</div>
+
+<div class="slide">
+    <h1>Vectors</h1>
+    <p>Vectors are one-dimensional arrays:</p>
+<pre>
+(defparameter v1 (make-array '(3)))
+
+(setf (aref v1 0) 'zero
+      (aref v1 1) 'one)
+
+v1
+=&gt; #(ZERO ONE 0)
+</pre>
+</div>
+
+
+<div class="slide">
+    <h1>Hash Tables</h1>
+    <p>A Hash Table associates values with keys:</p>
+<pre>
+(setq ht1 (make-hash-table))
+
+(gethash 'quux ht1)
+=&gt; NIL
+=&gt; NIL
+
+(setf (gethash 'baz ht1) 'baz-value)
+(gethash 'baz ht1)
+=&gt; BAZ-VALUE
+=&gt; T
+
+(setf (gethash 'gronk ht1) nil)
+(gethash 'gronk ht1)
+=&gt; NIL
+=&gt; T</pre>
+</div>
+
+<!--Input and Output-->
+
+<!--Reader Macros-->
+
+
+
+
+<!-- Looping -->
+
+<div class="slide">
+    <h1>Looping</h1>
+<pre>(dotimes (i 5)
+  (format t "Number: ~a~%" (+ 2 i)))
+
+Number: 2
+Number: 3
+Number: 4
+Number: 5
+Number: 6
+=&gt; NIL
+</pre>
+</div>
+
+
+
+<div class="slide">
+    <h1>The Loop Macro</h1>
+<pre>
+(loop for i from 1 to 10 collecting i)
+=&gt; (1 2 3 4 5 6 7 8 9 10)
+
+(loop for x from 1 to 10 summing (expt x 2))
+=&gt; 385
+
+(loop for x across "the quick brown fox jumps over the lazy dog"
+      counting (find x "aeiou"))
+=&gt; 11</pre>
+</div>
+
+<div class="slide">
+    <h1>The Loop Macro</h1>
+<pre>
+(loop for x in '(1 2 3 4)
+      collect (1+ x))
+=&gt; (2 3 4 5)
+</pre>
+</div>
+
+
+<div class="slide">
+    <h1>The Loop Macro</h1>
+<pre>
+(defun even/odd (ns)
+  (loop for n in ns
+        if (evenp n)
+          collect n into evens
+          else collect n into odds
+        finally (return (values evens odds))))
+
+(even/odd (list 1 2 3 5 6 8 11 20 54))
+=&gt; (2 6 8 20 54)
+=&gt; (1 3 5 11)
+</pre>
+</div>
+
+
+<div class="slide">
+    <h1>The Loop Macro</h1>
+<pre>
+(defparameter *random* (loop repeat 100 collect (random 10000)))
+
+(loop for i in *random*
+      counting (evenp i) into evens
+      counting (oddp i) into odds
+      summing i into total
+      maximizing i into max
+      minimizing i into min
+      finally (return (list min max total evens odds)))
+=&gt; (69 9918 479477 55 45)
+</pre>
+</div>
+
+
+<div class="slide">
+    <h1>Anonymous functions</h1>
+    <p><code>LAMBDA</code> can be used to define functions without giving
+    them an explicit name:</p>
+<pre>(defun double-me (x) (* 2 x))
+
+(double-me 4)
+=&gt; 8
+
+((lambda (x) (* 2 x)) 4)
+=&gt; 8</pre>
+</div>
+
+<div class="slide">
+    <h1>MAPCAR</h1>
+    <p><code>MAPCAR</code> traverses a list and applies a function to each
+    element of the list, returning a new list with the results:</p>
+<pre>(mapcar #'double-me (list 1 2 3 4))
+=&gt; (2 4 6 8)
+
+(mapcar (lambda (x) (* 3 x)) (list 1 2 3 4))
+=&gt; (3 6 9 12)</pre>
+</div>
+
+<div class="slide">
+    <h1>Functions are first class objects</h1>
+<pre>
+(defun curry (fn &amp;rest args)
+  (lambda (&amp;rest rest)
+    (apply fn (append args rest))))
+
+(funcall (curry #'* 2) 10)
+=&gt; 20
+
+(mapcar (curry #'+ 10) (list 1 2 6 7 30 40))
+=&gt; (11 12 16 17 40 50)
+</pre>
+</div>
+
+
+<div class="slide">
+    <h1>REDUCE</h1>
+<pre>(reduce #'+ #(1 2 3 4 5 6 7 8 9 10))
+=&gt; 55
+</pre>
+</div>
+
+
+<!--<div class="slide">
+    <h1>Symbols and their values</h1>
+    <p>The <code>#'</code> is used to access the function value of a symbol.</p>
+<pre>(mapcar #'double-me (list 1 2 3 4))
+=&gt; (2 4 6 8)
+</pre>
+    <p><em>What??</em></p>
+</div>
+
+<div class="slide">
+    <h1>Symbols and their values</h1>
+    <p>In Common Lisp symbols can have </p>
+<pre>(mapcar #'double-me (list 1 2 3 4))
+=&gt; (2 4 6 8)
+</pre>
+    <p><em>What??</em></p>
+</div>-->
+
+
+
+
+
+<!--Macro Definition-->
+<div class="slide">
+    <h1>Macros</h1>
+    <p>A Macro lets us do transformations to our source code before it's
+    even compiled.</p>
+    <p>They look a lot like functions, the form a macro definition is:</p>
+    <p><code>(defmacro name (arguments) body)</code></p>
+</div>
+
+<div class="slide">
+    <h1>Macros</h1>
+<pre>
+(defmacro reverse-cons (rest first)
+  `(cons ,first ,rest))
+
+(reverse-cons nil 2)
+=&gt; (2)</pre>
+</div>
+
+<div class="slide">
+    <h1>Macros</h1>
+<pre>
+(defmacro my-when (condition &amp;rest body)
+  `(if ,condition (progn ,@body)))
+
+(my-when (&gt; 5 2)
+  ;; do something...
+  'blah)
+=&gt; BLAH
+</pre>
+</div>
+
+<div class="slide">
+    <h1>Macros</h1>
+<pre>
+(defmacro my-unless (condition &amp;rest body)
+  `(if (not ,condition) (progn ,@body)))
+
+(my-unless (= 5 2)
+  (print "Of course it is not the same"))
+=&gt; "Of course it is not the same" 
+</pre>
+</div>
+
+
+<div class="slide">
+    <h1>Macros</h1>
+<pre>
+(defmacro aif (test then &amp;optional else)
+  `(let ((it ,test))
+     (if it ,then ,else)))
+
+(aif (get-customer "Pepe")
+  (print (customer-name it))
+  (print "Not found!"))
+=&gt; "Pepito"
+
+(aif (get-customer "Foo")
+  (print (customer-name it))
+  (print "Not found!"))
+=&gt; "Not Found!"
+</pre>
+</div>
+
+
+<div class="slide">
+    <h1>More functional functions</h1>
+<pre>
+(defun memoize (fn)10) (list 1 2 6 7 30 40))
+  (let ((cache (make-hash-table :test #'equal)))
+    (lambda (&amp;rest args)
+      (aif (gethash args cache)
+        it
+        (setf (gethash args cache) (apply fn args))))))
+</pre>
+    <p><small><a href="http://www.slideshare.net/kyleburton/introduction-to-lisp">http://www.slideshare.net/kyleburton/introduction-to-lisp</a></small>
+    </p>
+</div>
+
+<div class="slide">
+    <h1>More functional functions</h1>
+<pre>
+(defun expensive-func (x)
+  (sleep x)
+  (* 2 x))
+
+(defparameter *memoized-expensive-func* (memoize #'expensive-func))
+
+(funcall *memoized-expensive-func* 3)
+=&gt; 6  ;This function call takes 3 seconds to complete.
+
+(funcall *memoized-expensive-func* 3)
+=&gt; 6  ;This function call returns immediately</pre>
+</div>
+
+
+
+
+
+
+<div class="slide">
+    <h1>Common Lisp Object System (CLOS)</h1>
+
+<pre>
+(defclass rectangle ()
+  ((height :initarg :start-height
+           :accessor rectangle-height)
+   (width :initarg :start-width
+          :accessor rectangle-width)))
+</pre>
+</div>
+
+<div class="slide">
+    <h1>Common Lisp Object System (CLOS)</h1>
+<pre>(defparameter r1 (make-instance 'rectangle
+                                :start-height 50
+                                :start-width 100))
+
+(rectangle-height r1)
+=&gt; 50
+
+(rectangle-width r1)
+=&gt; 100
+</pre>
+</div>
+
+
+<div class="slide">
+    <h1>Common Lisp Object System (CLOS)</h1>
+<pre>
+(defclass color-rectangle (rectangle)
+  ((color :initarg :color
+          :accessor rectangle-color)))
+</pre>
+</div>
+
+<div class="slide">
+    <h1>Common Lisp Object System (CLOS)</h1>
+<pre>(defparameter r2 (make-instance 'color-rectangle
+                                :start-height 10
+                                :start-width 15
+                                :color 'red))
+
+(format nil "A ~a rectangle of ~ax~a"
+        (rectangle-color r2)
+        (rectangle-height r2)
+        (rectangle-width r2))
+=&gt; "A RED rectangle of 10x15"
+</pre>
+</div>
+
+
+<div class="slide">
+    <h1>Common Lisp Object System (CLOS)</h1>
+<pre>(defclass circle ()
+  ((radius :initarg :start-radius
+           :accessor circle-radius)))
+</pre>
+</div>
+
+
+<div class="slide">
+    <h1>Common Lisp Object System (CLOS)</h1>
+<pre>(defclass output-medium ()
+  ((name :initarg :name
+         :accessor medium-name)))
+
+(defclass screen (output-medium)
+  ((res-x :initarg :res-x
+          :accessor screen-res-x)
+   (res-y :initarg :res-y
+          :accessor screen-res-y)))
+
+(defclass printer (output-medium)
+  ((location :initarg :location
+             :accessor printer-location)))
+</pre>
+</div>
+
+
+<div class="slide">
+    <h1>Common Lisp Object System (CLOS)</h1>
+<pre>(defgeneric paint (shape medium))
+
+(defmethod paint ((shape rectangle) medium)
+  (format nil "Drawing a rectangle of ~ax~a, on unkown medium ~a"
+          (rectangle-height shape)
+          (rectangle-width shape)
+          (medium-name medium)))
+
+(defmethod paint ((shape circle) medium)
+  (format nil "Drawing a circle or radius ~a, on unknown medium ~a"
+          (circle-radius shape)
+          (medium-name medium)))
+</pre>
+</div>
+
+<div class="slide">
+    <h1>Common Lisp Object System (CLOS)</h1>
+<pre>(defmethod paint ((shape rectangle) (medium screen))
+  (format nil "Drawing a rectangle of ~ax~a, 
+               on screen ~a of ~a by ~a pixels"
+          (rectangle-height shape)
+          (rectangle-width shape)
+          (medium-name medium)
+          (screen-res-x medium)
+          (screen-res-y medium)))
+</pre>
+</div>
+
+<div class="slide">
+    <h1>Common Lisp Object System (CLOS)</h1>
+<pre>(defmethod paint ((shape rectangle) (medium printer))
+  (format nil "Drawing a rectangle of ~ax~a,
+          on printer ~a located at ~a"
+          (rectangle-height shape)
+          (rectangle-width shape)
+          (medium-name medium)
+          (printer-location medium)))
+</pre>
+</div>
+
+<div class="slide">
+    <h1>Common Lisp Object System (CLOS)</h1>
+<pre>(let ((r1 (make-instance 'rectangle
+                         :start-height 15
+                         :start-width 20))
+      (c1 (make-instance 'circle :start-radius 30))
+      (plotter (make-instance 'output-medium :name "Plotter"))
+      (screen1 (make-instance 'screen
+                              :name "Big Screen"
+                              :res-x 1024 :res-y 780))
+      (printer1 (make-instance 'printer
+                               :name "HP blah"
+                               :location "downstairs")))
+  (list
+    (paint r1 plotter)
+    (paint r1 screen1)
+    (paint r1 printer1)
+    (paint c1 plotter)))
+</pre>
+</div>
+
+<div class="slide">
+    <h1>Common Lisp Object System (CLOS)</h1>
+<pre>
+=&gt; ("Drawing a rectangle of 15x20, on unkown medium Plotter"
+       "Drawing a rectangle of 15x20, 
+           on screen Big Screen of 1024 by 780 pixels"
+       "Drawing a rectangle of 15x20,
+           on printer HP blah located at downstairs"
+       "Drawing a circle or radius 30, on unknown medium Plotter")
+</pre>
+</div>
+
+
+
+<div class="slide">
+    <h1>Free online books</h1>
+    <ul>
+        <li><a href="http://www.gigamonkeys.com/book/">Practical Common Lisp</a> (http://www.gigamonkeys.com/book)</li>
+        <li><a href="http://psg.com/~dlamkins/sl/cover.html">Successful Lisp</a> (http://psg.com/~dlamkins/sl/cover.html)</li>
+        <li><a href="http://www-2.cs.cmu.edu/~dst/LispBook/">Common Lisp: A
+        Gentle Introduction to Symbolic Computation</a> (http://www-2.cs.cmu.edu/~dst/LispBook/)</li>
+        <li><a
+            href="http://www.cse.buffalo.edu/pub/WWW/faculty/shapiro/Commonlisp/">Common Lisp: An Interactive Approach</a> (http://www.cse.buffalo.edu/pub/WWW/faculty/shapiro/Commonlisp/)</li>
+        <li><a href="http://www.paulgraham.com/onlisp.html">On Lisp</a>
+        (http://www.paulgraham.com/onlisp.html)</li>
+        <li><a href="http://mitpress.mit.edu/sicp/">Structure and
+            Interpretation of Computer Programs</a>
+        (http://mitpress.mit.edu/sicp/)</li>
+    </ul>
+</div>
+
+
+
+
+
+<!--
+lisp_cycles.png
+http://xkcd.com/297/
+-->
+<!--
+(defmacro random-if (prob consequent otherwise)
+ `(if (< (random 1.0) ,prob)
+    ,consequent
+    ,otherwise))
+
+(random-if 1/2
+ (format t "went left~&")
+ (format t "went right~&"))
+
+http://www.slideshare.net/kyleburton/introduction-to-lisp
+
+
+
+
+
+(defmacro aprog1 (it &rest body)
+ `(let ((it ,it))
+    ,@body
+    it))
+
+(aprog1 (make-hash-table :test #'equal)
+ (setf (gethash "a" it) 1)
+ (setf (gethash "b" it) 2))
+
+http://www.slideshare.net/kyleburton/introduction-to-lisp
+-->
+
+
+</div>
+
+</body>
+</html>
+<!-- vim: set foldmethod=indent ts=4 sw=4 et: -->
