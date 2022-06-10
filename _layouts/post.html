@@ -2,12 +2,40 @@
 layout: default
 ---
 
-<div id="header">
-  <h1>{{ page.title }}</h1>
-  <p>{{ page.date | date:'%B %d, %Y' }}</p>
-  <p class="index-link"><a href="/">Go back to index</a></p>
-</div>
+<main class="container post-layout">
+  <hgroup>
+    <h1>{{ page.title }}</h1>
+    <small>Published: {{ page.date | date:'%B %d, %Y' }}</small>
+  </hgroup>
 
-<div id="content">
   {{ content }}
-</div>
+</main>
+
+<footer class="container">
+  <hr>
+  <div class="about-container">
+    <div class="about-photo">
+      <img src="/media/images/about-photo-jorge-gajon.jpg">
+    </div>
+
+    <div class="about-description">
+      <strong>About</strong>
+      <p>Jorge Gajon, software developer living in Mexico City. I specialize on
+      backend development, following TDD practices with a focus on scalable
+      designs with clean and good OOP techniques.</p>
+      <p>I've worked with many
+      programming languages before, but have been working mostly with Ruby for
+      the last 11 years. Read more <a href="/about">about me</a>.</p>
+
+      {% include social-links.html %}
+    </div>
+  </div>
+  <hr>
+
+  <br>
+
+  {% include latest-articles.html %}
+  {% include footer-copyright.html %}
+</footer>
+
+<!-- vim: set sts=2 sw=2 et: -->

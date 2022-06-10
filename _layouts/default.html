@@ -1,61 +1,74 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<!doctype html>
+<html lang="en">
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
     <title>{{ page.title }}</title>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <link rel="stylesheet" href="/media/styles.css?v=20101208" type="text/css" media="screen, projection" />
-    <link rel="stylesheet" href="/media/print.css?v=20101208" type="text/css" media="print" />
-    <link rel="alternate" type="application/rss+xml" title="RSS" href="/feeds/entries/" />
-    <link rel="openid.server" href="http://www.myopenid.com/server" />
-    <link rel="openid.delegate" href="http://gajon.myopenid.com/" />
+    <style>
+      /* Posts */
+      .post-layout > hgroup {
+        text-align: center;
+      }
+
+      /* Footer components */
+      .about-container {
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
+        column-gap: 30px;
+      }
+      .about-container .about-photo {
+        flex: 1;
+        clip-path: circle();
+      }
+      .about-container .about-description {
+        flex: 5;
+      }
+
+      .footer-copyright a.secondary {
+        margin-left: 0.5rem;
+        text-decoration: none;
+      }
+
+      @media (min-width: 576px) {
+        .footer-copyright {
+          display: flex;
+          flex-flow: row wrap;
+          align-items: center;
+          justify-content: space-between;
+        }
+        .footer-copyright a.secondary {
+          margin: 0 0.5rem;
+          text-decoration: none;
+        }
+      }
+
+      .social-icon {
+        width: 1.0rem;
+        fill: var(--color);
+      }
+    </style>
   </head>
 
   <body>
-    <div id="container">
-
-      {{ content }}
-
-      <div id="sidebar">
-        <h3>About</h3>
-        <p>Jorge Gajon, software developer living in Mexico City; Ruby, Common
-        Lisp, JavaScript, Python, VIM, Slackware GNU/Linux, Metalhead.</p>
-
-        <ul class="social-links">
-          <li><img src="/media/icons/bitbucket-icon.png" /> <a href="http://bitbucket.org/gajon">Bitbucket</a></li>
-          <li><img src="/media/icons/github-icon.png" /> <a href="https://github.com/gajon">Github</a></li>
-          <li><img src="/media/icons/twitter-icon.png" /> <a href="http://twitter.com/gajon">Twitter</a></li>
-          <li><img src="/media/icons/appdotnet-icon.png" /> <a href="https://alpha.app.net/gajon" rel="me">App.net</a></li>
-          <li><img src="/media/icons/delicious-icon.png" /> <a href="http://delicious.com/gajon">Delicious Bookmarks</a></li>
-          <li><img src="/media/icons/stackoverflow-icon.png" /> <a href="http://stackoverflow.com/users/103076/jorge-gajon">Stack Overflow</a></li>
-          <li><img src="/media/icons/linkedin-icon.png" /> <a href="http://www.linkedin.com/in/jorgeg">LinkedIn</a></li>
-          <li><img src="/media/icons/facebook-icon.png" /> <a href="http://www.facebook.com/jorge.gajon">Facebook</a></li>
-          <li><img src="/media/icons/reader-icon.png" /> <a href="http://www.google.com/reader/shared/12113707549663500946">Google Reader</a></li>
-          <li><img src="/media/icons/flickr-icon.png" /> <a href="http://www.flickr.com/photos/jorge_g/">Flickr</a></li>
-          <li><img src="/media/icons/lastfm-icon.png" /> <a href="http://www.last.fm/user/jorge_g">Last.fm</a></li>
+    <div style="background-color: var(--code-background-color);">
+      <nav class="container">
+        <ul>
+          <li>
+            <div><strong>Jorge Gajon</strong></div>
+            <div>Backend Developer</div>
+          </li>
         </ul>
-
-
-        <h3>Latest entries</h3>
-
-        <ul class="latest-entries">
-          {% for post in site.posts %}
-          <li><a href="{{ post.url }}">{{ post.title }}</a></li>
-          {% endfor %}
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/about">About</a></li>
         </ul>
-
-
-        <h3>RSS Feed</h3>
-        <p class="feed"><img src="/media/icons/feed-icon.png"/>
-        <a href="/feeds/entries/">Latest entries</a></p>
-      </div>
-
-      <div id="footer">
-        <p>&copy; 2010 Jorge Gajon
-      </div>
-
+      </nav>
     </div>
 
+    {{ content }}
   </body>
 </html>
 
-<!-- vim: set ts=4 sw=4 noexpandtab: -->
+<!-- vim: set sts=2 sw=2 et: -->
