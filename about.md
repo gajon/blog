@@ -5,10 +5,10 @@ title: About | Jorge Gajon
 
 # About
 
-Hello, I'm Jorge and I currently live in Mexico City. I've been working as a
-software developer for over 20 years, and during this time I've gained
-experience with different programming languages and paradigms. From writing
-Bluetooth protocols in embedded devices to desktop applications, to web
+Hello, I'm Jorge a senior full-stack developer living in Mexico City. I've been
+working as a software developer for over 20 years, and during this time I've
+gained experience with different programming languages and paradigms. From
+writing Bluetooth protocols in embedded devices to desktop applications, to web
 applications.
 
 In the past I've worked with C, C++, Java, PHP, Python, Perl, Common Lisp, and
