@@ -3,30 +3,29 @@ layout: post
 title: git tips & tricks - the fundamentals
 ---
 
-Most of the time we only use a very limited set of `git` commands, `git checkout
+Most of the time we only use a very limited set of git commands, `git checkout
 -b <branch>` to start a new branch, `git pull origin` to update your current
 branch with any remote changes, `git add .` & `git commit -m` to save your work,
 and `git push origin` to push your changes to a remote repository.
 
 This is perfectly fine, and online tools like Github or Gitlab make working with
-a `git` repository even easier. But have you wondered what is actually going on
+a git repository even easier. But have you wondered what is actually going on
 when we execute those commands?
 
-In this article we are going to explore how a `git` repository works, and how
-when you use the commands we mentioned above the branches and commits are
-created and tracked inside the repository. We will also understand how to fix
-common problems that arise when working with other people over the same
-repository
+In this article we are going to explore how a git repository works, and how when
+you use the commands we mentioned above the branches and commits are created and
+tracked inside the repository. We will also understand how to fix common
+problems that arise when working with other people over the same repository
 
-All of this will be explained in a very easy to understand way, without diving
-into any deep technical details that are not important to our usage of `git`.
+All of this will be explained in a very easy to understand manner, without
+diving into deep technical details that are not important to our usage of git.
 
 ## What is a git repository?
 
 <blockquote>
 <em>The following explanation is not 100% technically accurate, but instead a
 simplification that will allow us to think about this topic without getting too
-distracted with details you won't really need to know.</em>
+distracted with details we don't really need.</em>
 </blockquote>
 
 We can think of a git repository as a collection of commits organized in a
@@ -65,27 +64,31 @@ $ echo "This is our first file" > README.txt
 $ git add README.txt
 
 $ git commit -m "Initial commit, added README.txt"
-[main (root-commit) 75c3507] Initial commit, added README.txt
+[main (root-commit) c8c57bf] Initial commit, added README.txt
  1 file changed, 1 insertion(+)
  create mode 100644 README.txt
 ```
 
-We created an empty repository with the name `test-repository`,
-this created a directory with that name, and we also specified the name of our
-initial branch to be `main`.
+We created an empty repository with the name `test-repository`, this created a
+directory with that name, and we also specified the name of our initial branch
+to be `main`.
 
-We created a file `README.txt` with one line of text, and we committed our
-“work” with our very first commit. Notice that git is telling us what the hash
-of this commit is with `[main (root-commit) 75c3507]`, in this case the hash is
-`75c3507`.
+We created a file `README.txt` with one line of text, and we committed our work
+with our very first commit. Notice that git is telling us what the hash of this
+commit is with `[main (root-commit) c8c57bf]`, in this case the hash is
+`c8c57bf`.
 
 A visual representation of our graph looks like this:
 
-<<<<<graph>>>>>
+```
+┌────┐    ┌────┐     .─────────.
+│HEAD│───▶│main│───▶(  c8c57bf  )
+└────┘    └────┘     `─────────'
+```
 
-So far we have only one node (one commit), and a branch named `main` pointing to
-this commit. There's also a special pointer named `HEAD` that is pointing to
-`main`.
+So far we have only one node with commit hash `c8c57bf`, and a branch named
+`main` pointing to this commit. There's also a special pointer named `HEAD` that
+is pointing to `main`.
 
 Now let's create a second commit.
 
@@ -94,22 +97,32 @@ $ echo "Welcome to our new repository" >> README.txt
 $ git add README.txt
 
 $ git commit -m "Added second line to README.txt"
-[main b90865f] Added second line to README.txt
+[main 3bbdb69] Added second line to README.txt
  1 file changed, 1 insertion(+)
 ```
 
-The hash of the second commit is `b90865f`. Our graph now contains two nodes and
+The hash of the second commit is `3bbdb69`. Our graph now contains two nodes and
 it looks like this:
 
-<<<<<graph>>>>>
+```
+┌────┐    ┌────┐     .─────────.
+│HEAD│───▶│main│───▶(  3bbdb69  )
+└────┘    └────┘     `─────────'
+                          │
+                          │
+                          ▼
+                     .─────────.
+                    (  c8c57bf  )
+                     `─────────'
+```
 
-The newest commit `b90865f` has an arrow pointing to the first commit `75c3507`.
-We say that the parent commit of `b90865f` is `75c3507`. The very first commit
+The newest commit `3bbdb69` has an arrow pointing to the first commit `c8c57bf`.
+We say that the parent commit of `3bbdb69` is `c8c57bf`. The very first commit
 in a repository does not have a parent, and every subsequent commit will have
 one or more parents.
 
-Notice that the branch `main` has now moved and it is pointing to
-`b90865f`, and also notice that the `HEAD` pointer also moved with `main`.
+Also notice that the branch `main` has moved and it is pointing to `3bbdb69`,
+and that the `HEAD` pointer also moved with `main`.
 
 Let's add a third commit just to make this more interesting.
 
@@ -117,12 +130,30 @@ Let's add a third commit just to make this more interesting.
 $ touch empty-file.txt
 $ git add empty-file.txt
 $ git commit -m "Added an empty file"
-[main edc3f18] Added an empty file
+[main bece83c] Added an empty file
  1 file changed, 0 insertions(+), 0 deletions(-)
  create mode 100644 empty-file.txt
 ```
 
-<<<<<graph>>>>>
+Our graph now looks like this:
+
+```
+┌────┐    ┌────┐     .─────────.
+│HEAD│───▶│main│───▶(  bece83c  )
+└────┘    └────┘     `─────────'
+                          │
+                          │
+                          ▼
+                     .─────────.
+                    (  3bbdb69  )
+                     `─────────'
+                          │
+                          │
+                          ▼
+                     .─────────.
+                    (  c8c57bf  )
+                     `─────────'
+```
 
 The special `HEAD` pointer will follow us to wherever we jump in the graph of
 commits. By using `git checkout` we can jump to any commit we want, and it will
@@ -130,8 +161,8 @@ also take care of updating our working files to match the state they had when
 that commit was created.
 
 ```
-$ git checkout 75c3507
-Note: switching to '75c3507'.
+$ git checkout c8c57bf
+Note: switching to 'c8c57bf'.
 
 You are in 'detached HEAD' state. You can look around, make experimental
 changes and commit them, and you can discard any commits you make in this
@@ -148,17 +179,22 @@ Or undo this operation with:
 
 Turn off this advice by setting config variable advice.detachedHead to false
 
-HEAD is now at 75c3507 Initial commit, added README.txt
+HEAD is now at c8c57bf Initial commit, added README.txt
 ```
 
-git is telling you that you are now in a “detached HEAD” state. This means that
+git is telling us that we are now in a “detached HEAD” state. This means that
 `HEAD` is no longer pointing to a branch. This is important because if you
-create new commits while in a detached `HEAD` state and then jump to a different
-branch, there will be branch pointing to the commits you created and they could
-be lost.
+create new commits while in this “detached HEAD” state and then jump back to a
+different branch, you could lose those commits.
 
-> Note that instead of `git checkout 75c3507` you could also have used `git
-> switch --detached 75c3507`.
+> The new recommended way to switch to a “detached HEAD” state is to use the
+> command `git switch --detach`, this way you are being more explicit about your
+> intention. For example:
+>
+> ```
+> $ git switch --detach c8c57bf
+> HEAD is now at c8c57bf Initial commit, added README.txt
+```
 
 We can see that the contents of our files and our working directory reflect the
 state they had when the commit we are pointing now was created.
@@ -171,13 +207,13 @@ $ cat empty-file.txt
 cat: empty-file.txt: No such file or directory
 ```
 
-We can experiment while in this “detached HEAD” state, we can create new commits
-and they won't affect at all our existing branches. If we want to discard this
+We can experiment while in this “detached HEAD” state. For example we can create
+new commits and they won't affect other branches. If we want to discard this
 experiment we can simply jump to another branch. If we want keep the changes
 made in this experiment then we have the option of creating a new branch here.
 
 Let's open your favorite code editor and change the `README.txt` file so that it
-contains the following lines, then let's save that change in a new commit.
+contains the following lines:
 
 ```
 This is our first file
@@ -186,35 +222,118 @@ Changelog:
 - Added README.txt
 ```
 
+Then save that change in a new commit.
+
 ```
 $ git add README.txt
 $ git commit -m "Added changelog to README.txt"
-[detached HEAD 8bfd1cf] Added changelog to README.txt
+[detached HEAD fb75aff] Added changelog to README.txt
  1 file changed, 3 insertions(+)
 ```
 
-Our graph now looks like this, notice that `HEAD` moved to point to the new
-commit, and the new commit has an arrow to `75c3507` meaning that `75c3507` is
-the parent of our new commit. We are still in a “detached HEAD” state.
+Our graph now looks like the following. Notice that `HEAD` moved to point to the
+new commit `fb75aff`, and the new commit has an arrow to `c8c57bf` meaning that
+`c8c57bf` is the parent of our new commit. We are still in a “detached HEAD”
+state.
 
-<<<<<graph>>>>>
+```
+                 ┌────┐     .─────────.
+                 │main│───▶(  bece83c  )
+                 └────┘     `─────────'
+                                 │
+                                 │
+                                 ▼
+┌────┐     .─────────.      .─────────.
+│HEAD│───▶(  fb75aff  )    (  3bbdb69  )
+└────┘     `─────────'      `─────────'
+                │                │
+                └───────────────┐│
+                                ▼▼
+                            .─────────.
+                           (  c8c57bf  )
+                            `─────────'
+```
 
 Now let's create a new branch that will point to this new commit, and in this
 way we avoid losing this work if we jump to a different branch.
 
 ```
-$ git switch -c readme-changelog
-Switched to a new branch 'readme-changelog'
+$ git switch -c changelog
+Switched to a new branch 'changelog'
 ```
 
-Our graph now looks like this. Notice that now `HEAD` points to our new branch
-`readme-changelog`. If we create new commits now, the new branch pointer
-`readme-changelog` will move to point to the new commits, and the `HEAD` pointer
-will move as well to continue pointing to the new branch.
+Notice that now `HEAD` points to our new branch `changelog`, we are no longer in
+a “detached HEAD” state.
 
-We are no longer in a “detached HEAD” state.
+```
+                 ┌────┐     .─────────.
+                 │main│───▶(  bece83c  )
+                 └────┘     `─────────'
+                                 │
+                                 │
+┌────┐  ┌─────────┐              │
+│HEAD│─▶│changelog│              │
+└────┘  └─────────┘              │
+          │                      │
+          │                      ▼
+          │  .─────────.    .─────────.
+          └▶(  fb75aff  )  (  3bbdb69  )
+             `─────────'    `─────────'
+                  │              │
+                  └─────────────┐│
+                                ▼▼
+                            .─────────.
+                           (  c8c57bf  )
+                            `─────────'
+```
 
-<<<<<graph>>>>>
+If we create new commits now, the new branch `changelog` will move to point to
+the new commits, and the `HEAD` pointer will move as well to continue pointing
+to our new branch.
+
+## Going back to our main branch
+
+Let's go back to our `main` branch, this will make our special `HEAD` pointer
+move to point to `main` and this will also update the contents of our working
+files to match the state they had when we last created a commit in `main`.
+
+```
+$ git switch main
+Switched to branch 'main'
+```
+
+Our graph now looks like this:
+
+```
+┌────┐       ┌────┐     .─────────.
+│HEAD│──────▶│main│───▶(  bece83c  )
+└────┘       └────┘     `─────────'
+                             │
+                             │
+    ┌─────────┐              │
+    │changelog│              │
+    └─────────┘              │
+      │                      │
+      │                      ▼
+      │  .─────────.    .─────────.
+      └▶(  fb75aff  )  (  3bbdb69  )
+         `─────────'    `─────────'
+              │              │
+              └─────────────┐│
+                            ▼▼
+                        .─────────.
+                       (  c8c57bf  )
+                        `─────────'
+```
+
+And if we inspect the contents of our `README.txt` file we see that the changes
+made in the `changelog` branch are not there anymore.
+
+```
+$ cat README.txt
+This is our first file
+Welcome to our new repository
+```
 
 
 ## Remote vs local branches
