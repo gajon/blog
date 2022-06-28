@@ -86,6 +86,9 @@ A visual representation of our graph looks like this:
 └────┘    └────┘     `─────────'
 ```
 
+> **NOTE:** If you follow these commands on your own computer you'll notice that the
+> commit hashes will be entirely different for you, this is normal.
+
 So far we have only one node with commit hash `c8c57bf`, and a branch named
 `main` pointing to this commit. There's also a special pointer named `HEAD` that
 is pointing to `main`.
@@ -194,7 +197,7 @@ different branch, you could lose those commits.
 > ```
 > $ git switch --detach c8c57bf
 > HEAD is now at c8c57bf Initial commit, added README.txt
-```
+> ```
 
 We can see that the contents of our files and our working directory reflect the
 state they had when the commit we are pointing now was created.
@@ -334,6 +337,92 @@ $ cat README.txt
 This is our first file
 Welcome to our new repository
 ```
+
+## Display the repository graph with `git log`
+
+So far I've shown you a simplified “visual” representation of the graph that
+contains our commits inside our repository. You can ask git to display this
+graph in your terminal with the following command.
+
+```
+$ git log --graph --all
+* commit fb75affebd2d44fd7100bfe932a06004623825cf (changelog)
+| Author: Jorge Gajon <gajon@gajon.org>
+| Date:   Sun Jun 26 23:56:14 2022 -0500
+|
+|     Added changelog to README.txt
+|
+| * commit bece83c61b9d0bd58f5d7d90cb9ca10af8771802 (HEAD -> main)
+| | Author: Jorge Gajon <gajon@gajon.org>
+| | Date:   Sun Jun 26 23:42:06 2022 -0500
+| |
+| |     Added an empty file
+| |
+| * commit 3bbdb697b2fe653de8f73c9071bcacb3aaa3b79b
+|/  Author: Jorge Gajon <gajon@gajon.org>
+|   Date:   Sun Jun 26 23:35:26 2022 -0500
+|
+|       Added second line to README.txt
+|
+* commit c8c57bfe49e8d5d1918571f4cbdc708cfd82501e
+  Author: Jorge Gajon <gajon@gajon.org>
+  Date:   Sun Jun 26 23:15:13 2022 -0500
+
+      Initial commit, added README.txt
+```
+
+Notice a few things. First, the commit hashes are being displayed in their long
+form, rather than the short form we've seen so far. For example the commit hash
+we've previously seen as `bece83c` is being shown as its full value of
+`bece83c61b9d0bd58f5d7d90cb9ca10af8771802`. Both the short and long form are
+interchangeable.
+
+The second thing to notice is that the commit being shown at the very top is the
+latest commit we created, in this case the latest commit in the `changelog`
+branch.
+
+If we re-arrange a little bit the visual graph we were seeing previously:
+
+```
+ .─────────.     ┌─────────┐
+(  fb75aff  )◀───│changelog│
+ `─────────'     └─────────┘
+     │
+     │   .─────────.    ┌────┐   ┌────┐
+     │  (  bece83c  )◀──│main│◀──│HEAD│
+     │   `─────────'    └────┘   └────┘
+     │        │
+     │        ▼
+     │   .─────────.
+     │  (  3bbdb69  )
+     │   `─────────'
+     │        │
+     │┌───────┘
+     ▼▼
+ .─────────.
+(  c8c57bf  )
+ `─────────'
+```
+
+Compare this to what `git log --graph --all` is showing you. Can you see
+identify the arrow pointing to each commit's parent? Can you see where the
+branches and the `HEAD` are pointing to?
+
+You can ask git to display this graph in a extremely compact form:
+
+```
+$ git log --format=oneline --graph --all
+* fb75affebd2d44fd7100bfe932a06004623825cf (changelog) Added changelog to README.txt
+| * bece83c61b9d0bd58f5d7d90cb9ca10af8771802 (HEAD -> main) Added an empty file
+| * 3bbdb697b2fe653de8f73c9071bcacb3aaa3b79b Added second line to README.txt
+|/
+* c8c57bfe49e8d5d1918571f4cbdc708cfd82501e Initial commit, added README.txt
+```
+
+Even though there's no “arrow” shown between `bece83c` and `3bbdb69`, you can
+still see that `3bbdb69` is the parent of `bece83c`.
+
+
 
 
 ## Remote vs local branches
