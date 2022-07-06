@@ -9,15 +9,16 @@ branch with any remote changes, `git add .` & `git commit -m` to save your work,
 and `git push origin` to push your changes to a remote repository.
 
 This is perfectly fine, and online tools like Github or Gitlab make working with
-a git repository even easier. But have you wondered what is actually going on
-when we execute those commands?
+a git repository even easier. But have you wondered what is going on when we
+execute those commands?
 
-In this article we are going to explore how a git repository works, and how when
-you use the commands we mentioned above the branches and commits are created and
-tracked inside the repository. We will also understand how to fix common
-problems that arise when working with other people over the same repository
+In this and the following articles we are going to explore how a git repository
+works, and how when you use the commands we mentioned above the branches and
+commits are created and tracked inside the repository. We will also understand
+how to fix common problems that arise when working with other people over the
+same repository.
 
-All of this will be explained in a very easy to understand manner, without
+All of this will be explained in a very easy-to-understand manner, without
 diving into deep technical details that are not important to our usage of git.
 
 ## What is a git repository?
@@ -25,7 +26,7 @@ diving into deep technical details that are not important to our usage of git.
 <blockquote>
 <em>The following explanation is not 100% technically accurate, but instead a
 simplification that will allow us to think about this topic without getting too
-distracted with details we don't really need.</em>
+distracted with details we don't need.</em>
 </blockquote>
 
 We can think of a git repository as a collection of commits organized in a
@@ -42,15 +43,15 @@ starting node.
 
 You can think of the git commands as commands to manipulate this DAG. Each node
 in the graph represents a commit and each commit has one or more parents. In
-turn each commit represents a change (or “patch”) to the contents of your
+turn, each commit represents a change (or “patch”) to the contents of your
 repository.
 
 ## Branches are pointers to commits
 
 We can refer to the commits in a graph by their “hash”, each node in a git
-repository have a unique “hash”, no two commits can ever have the same one. But
-using hashes would be very inconvenient, so instead we usually use “branches” to
-refer to commits.
+repository has a unique “hash”, no two commits can ever have the same one. But
+using hashes would be very inconvenient, so we use “branches” to refer to
+commits instead.
 
 Let's see this in action with an example. Let's initialize an empty repository
 and create a couple of commits.
@@ -75,7 +76,7 @@ to be `main`.
 
 We created a file `README.txt` with one line of text, and we committed our work
 with our very first commit. Notice that git is telling us what the hash of this
-commit is with `[main (root-commit) c8c57bf]`, in this case the hash is
+commit is with `[main (root-commit) c8c57bf]`, in this case, the hash is
 `c8c57bf`.
 
 A visual representation of our graph looks like this:
@@ -86,7 +87,7 @@ A visual representation of our graph looks like this:
 └────┘    └────┘     `─────────'
 ```
 
-> **NOTE:** If you follow these commands on your own computer you'll notice that the
+> **NOTE:** If you follow these commands on your computer you'll notice that the
 > commit hashes will be entirely different for you, this is normal.
 
 So far we have only one node with commit hash `c8c57bf`, and a branch named
@@ -124,8 +125,8 @@ We say that the parent commit of `3bbdb69` is `c8c57bf`. The very first commit
 in a repository does not have a parent, and every subsequent commit will have
 one or more parents.
 
-Also notice that the branch `main` has moved and it is pointing to `3bbdb69`,
-and that the `HEAD` pointer also moved with `main`.
+Also notice that the branch `main` has moved and it is pointing to `3bbdb69` and
+that the `HEAD` pointer also moved with `main`.
 
 Let's add a third commit just to make this more interesting.
 
@@ -158,7 +159,7 @@ Our graph now looks like this:
                      `─────────'
 ```
 
-The special `HEAD` pointer will follow us to wherever we jump in the graph of
+The special `HEAD` pointer will follow us wherever we jump in the graph of
 commits. By using `git checkout` we can jump to any commit we want, and it will
 also take care of updating our working files to match the state they had when
 that commit was created.
@@ -200,7 +201,7 @@ different branch, you could lose those commits.
 > ```
 
 We can see that the contents of our files and our working directory reflect the
-state they had when the commit we are pointing now was created.
+state they had when the commit we are pointing to now was created.
 
 ```
 $ cat README.txt
@@ -210,10 +211,11 @@ $ cat empty-file.txt
 cat: empty-file.txt: No such file or directory
 ```
 
-We can experiment while in this “detached HEAD” state. For example we can create
-new commits and they won't affect other branches. If we want to discard this
-experiment we can simply jump to another branch. If we want keep the changes
-made in this experiment then we have the option of creating a new branch here.
+We can experiment while in this “detached HEAD” state. For example, we can
+create new commits and they won't affect other branches. If we want to discard
+this experiment we can simply jump to another branch. If we want to keep the
+changes made in this experiment then we have the option of creating a new branch
+here.
 
 Let's open your favorite code editor and change the `README.txt` file so that it
 contains the following lines:
@@ -258,7 +260,7 @@ state.
 ```
 
 Now let's create a new branch that will point to this new commit, and in this
-way we avoid losing this work if we jump to a different branch.
+way, we avoid losing this work if we jump to a different branch.
 
 ```
 $ git switch -c changelog
@@ -371,14 +373,14 @@ $ git log --graph --all
       Initial commit, added README.txt
 ```
 
-Notice a few things. First, the commit hashes are being displayed in their long
-form, rather than the short form we've seen so far. For example the commit hash
-we've previously seen as `bece83c` is being shown as its full value of
-`bece83c61b9d0bd58f5d7d90cb9ca10af8771802`. Both the short and long form are
+Notice a few things. First, the commit hashes are being displayed in their
+long-form, rather than the short form we've seen so far. For example the commit
+hash we've previously seen as `bece83c` is being shown as its full value of
+`bece83c61b9d0bd58f5d7d90cb9ca10af8771802`. Both the short and long-form are
 interchangeable.
 
 The second thing to notice is that the commit being shown at the very top is the
-latest commit we created, in this case the latest commit in the `changelog`
+latest commit we created, in this case, the latest commit in the `changelog`
 branch.
 
 If we re-arrange a little bit the visual graph we were seeing previously:
@@ -404,11 +406,11 @@ If we re-arrange a little bit the visual graph we were seeing previously:
  `─────────'
 ```
 
-Compare this to what `git log --graph --all` is showing you. Can you see
-identify the arrow pointing to each commit's parent? Can you see where the
-branches and the `HEAD` are pointing to?
+Compare this to what `git log --graph --all` is showing you. Can you identify
+the arrow pointing to each commit's parent? Can you see where the branches and
+the `HEAD` are pointing to?
 
-You can ask git to display this graph in a extremely compact form:
+You can ask git to display this graph in an extremely compact form:
 
 ```
 $ git log --format=oneline --graph --all
@@ -422,6 +424,14 @@ $ git log --format=oneline --graph --all
 Even though there's no “arrow” shown between `bece83c` and `3bbdb69`, you can
 still see that `3bbdb69` is the parent of `bece83c`.
 
+We'll talk more about `git log` in coming articles. But for now, try this
+exercise:
+
+- Remove the `--all` option from the command. What happens?
+- Switch back to the `changelog` branch, and then display the graph with and
+  without the `--all` option.
+- Switch to a commit in a “detached HEAD” state, and inspect the graph again.
+- What happens if you don't include the `--graph` option?
 
 
 
